@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Ministério Videira</title>
+<meta name="description" content="Ministério Videira, Vila Prudente. Permanecei em mim, e eu permanecerei em vós. Jo 15:4">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;1,700&family=Lora:ital,wght@0,400;1,400;1,500&display=swap">
+<style>
+/* Layout: folhas de hera à esquerda e nome à direita, como no logo; ao rolar, uma folha cresce até cobrir a tela e abre o versículo. */
+:root {
+  --ivy: #1f4a33;
+  --ivy-deep: #163826;
+  --ivy-vein: #e9efe9;
+  --tendril: #9fb3a6;
+  --ink: #26292a;
+  --mist: #6f7572;
+  --bg: #ffffff;
+  --surface: #f3f6f3;
+  --line: #dde4de;
+  --on-ivy: #f4f8f4;
+  --f-display: "Montserrat", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-verse: "Lora", Georgia, "Times New Roman", serif;
+  --wrap: 1120px;
+  --hp: 0; --mx: 0; --my: 0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ivy: #4a9a6b; --ivy-deep: #173726; --ivy-vein: #0f1a14; --tendril: #5d7666;
+    --ink: #eef2ee; --mist: #a7b1ab; --bg: #0f1612; --surface: #16201a; --line: #26342c;
+    --on-ivy: #f4f8f4; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ivy: #4a9a6b; --ivy-deep: #173726; --ivy-vein: #0f1a14; --tendril: #5d7666;
+  --ink: #eef2ee; --mist: #a7b1ab; --bg: #0f1612; --surface: #16201a; --line: #26342c;
+  --on-ivy: #f4f8f4; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-display); font-size: 16px; line-height: 1.65; overflow-x: clip; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--ivy); outline-offset: 3px; border-radius: 2px; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+p { margin: 0; }
+
+.wrap { max-width: var(--wrap); margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.eyebrow { font-size: .72rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--ivy); }
+.h2 { font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.05; font-weight: 800; letter-spacing: -.01em; }
+.h2 .thin { font-weight: 200; color: var(--mist); }
+
+/* Barra de progresso e cabeçalho */
+.progress { position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; height: 3px; background: var(--ivy); transform-origin: 0 50%; transform: scaleX(0); z-index: 12; }
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 6; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid transparent; transition: border-color .3s; }
+.top.small { border-color: var(--line); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 16px; transition: padding .3s; }
+.top.small .wrap { padding-block: 9px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.brand svg { width: 34px; height: 34px; flex: none; transition: transform .6s cubic-bezier(.3,1.6,.5,1); }
+.brand:hover svg { transform: rotate(-20deg) scale(1.15); }
+.brand-name { display: flex; flex-direction: column; line-height: 1; }
+.brand-name b { font-weight: 700; font-size: .82rem; letter-spacing: .04em; }
+.brand-name span { font-weight: 200; font-size: 1.02rem; letter-spacing: .12em; color: var(--mist); }
+.nav { display: flex; align-items: center; gap: 24px; font-size: .8rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.nav a { text-decoration: none; color: var(--mist); position: relative; transition: color .2s; }
+.nav a:not(.nav-cta)::after { content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 2px; background: var(--ivy); transform: scaleX(0); transform-origin: 100% 50%; transition: transform .35s; }
+.nav a:not(.nav-cta):hover::after { transform: scaleX(1); transform-origin: 0 50%; }
+.nav a:hover { color: var(--ivy); }
+.nav-cta { background: var(--ivy); color: var(--on-ivy) !important; padding: 9px 16px; border-radius: 999px; transition: transform .25s, background .25s !important; }
+.nav-cta:hover { transform: scale(1.06); background: var(--ivy-deep); }
+@media (max-width: 640px) { .nav a:not(.nav-cta) { display: none; } }
+
+/* Hero */
+.hero { position: relative; padding-block: clamp(40px, 8vw, 96px) clamp(48px, 8vw, 96px); overflow: clip; }
+#fall { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.hero .wrap { position: relative; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(24px, 5vw, 64px); align-items: center; }
+.leaves-scroll { justify-self: end; width: 100%; max-width: 420px; transform: scale(calc(1 + var(--hp) * .45)) rotate(calc(var(--hp) * 14deg)); transform-origin: 60% 60%; will-change: transform; }
+.leaves { width: 100%; height: auto; display: block; transform: translate(calc(var(--mx) * 14px), calc(var(--my) * 14px)); transition: transform .4s ease-out; overflow: visible; }
+.leaves .leaf { transform-box: fill-box; transform-origin: 50% 95%; animation: grow 1.4s cubic-bezier(.2,.9,.25,1.2) both, sway 6s 1.6s ease-in-out infinite; }
+.leaves .leaf.l2 { animation-delay: .25s, 2s; animation-duration: 1.4s, 7s; }
+.leaves .tendril { stroke-dasharray: 700; animation: draw 2.4s .5s ease-out both; }
+@keyframes grow { from { transform: scale(.2) rotate(-40deg); } to { transform: none; } }
+@keyframes sway { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(3.5deg); } }
+@keyframes draw { from { stroke-dashoffset: 700; } to { stroke-dashoffset: 0; } }
+.hero-copy { transform: translateY(calc(var(--hp) * -70px)); opacity: calc(1 - var(--hp) * .8); }
+.title { line-height: .95; }
+.line { display: block; overflow: clip; padding-bottom: .04em; }
+.ch { display: inline-block; animation: rise .9s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(var(--i) * 55ms + .2s); }
+@keyframes rise { from { transform: translateY(105%) rotate(6deg); } to { transform: none; } }
+.t1 { font-weight: 800; font-size: clamp(2.2rem, 7vw, 5rem); letter-spacing: -.01em; }
+.t2 { font-weight: 200; font-size: clamp(2.8rem, 9.4vw, 6.6rem); letter-spacing: .06em; color: var(--mist); }
+.ref { display: block; text-align: right; max-width: 6.2em; font-weight: 700; font-style: italic; color: var(--ivy); font-size: clamp(.9rem, 1.6vw, 1.15rem); margin-top: 4px; animation: pop .6s 1.1s cubic-bezier(.3,1.6,.5,1) both; }
+@keyframes pop { from { transform: scale(0); } to { transform: none; } }
+.hero-verse { margin-top: 26px; font-family: var(--f-verse); font-style: italic; font-size: clamp(1.15rem, 2.2vw, 1.4rem); line-height: 1.5; max-width: 32ch; }
+.next { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-top: 26px; padding: 10px 18px 10px 12px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); font-size: .86rem; }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--ivy); position: relative; flex: none; }
+.dot::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--ivy); animation: ping 1.8s ease-out infinite; }
+@keyframes ping { from { transform: scale(1); opacity: .6; } to { transform: scale(3); opacity: 0; } }
+.next b { font-weight: 700; }
+.next .cd { font-variant-numeric: tabular-nums; color: var(--ivy); font-weight: 700; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font: inherit; font-weight: 600; font-size: .9rem; letter-spacing: .04em; padding: 13px 22px; border-radius: 999px; border: 1.5px solid var(--ivy); cursor: pointer; position: relative; overflow: hidden; isolation: isolate; transition: color .3s, transform .3s; }
+.btn::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; transform: scale(0); transition: transform .45s cubic-bezier(.2,.8,.2,1); }
+.btn:hover { transform: translateY(-2px); }
+.btn:hover::before { transform: scale(1.02); }
+.btn-solid { background: var(--ivy); color: var(--on-ivy); }
+.btn-solid::before { background: var(--ivy-deep); }
+.btn-ghost { color: var(--ivy); background: transparent; }
+.btn-ghost::before { background: var(--ivy); }
+.btn-ghost:hover { color: var(--on-ivy); }
+.btn svg { width: 18px; height: 18px; flex: none; }
+@media (max-width: 760px) {
+  .hero .wrap { grid-template-columns: 1fr; }
+  .leaves-scroll { max-width: 210px; justify-self: start; }
+}
+
+/* Faixa corrida */
+.marquee { background: var(--ivy); color: var(--on-ivy); overflow: hidden; padding-block: 16px; transform: rotate(-1.5deg); margin-block: 10px; width: 104%; margin-left: -2%; }
+.track { display: flex; width: max-content; animation: slide 32s linear infinite; }
+.marquee:hover .track { animation-play-state: paused; }
+.track span { display: inline-flex; align-items: center; gap: 28px; padding-right: 28px; font-weight: 800; font-size: clamp(1rem, 2.2vw, 1.4rem); letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
+.track span i { font-style: normal; font-weight: 200; }
+.track svg { width: 26px; height: 26px; flex: none; --ivy: var(--on-ivy); --ivy-vein: var(--ivy-deep); }
+@keyframes slide { to { transform: translateX(-50%); } }
+
+/* Revelação com zoom ao rolar (o conteúdo sempre fica visível) */
+section { padding-block: clamp(64px, 9vw, 112px); }
+.js .rv { transform: scale(.88) translateY(36px); transition: transform 1s cubic-bezier(.2,.8,.2,1); transition-delay: calc(var(--d, 0) * 110ms); }
+.js .rv.in { transform: none; }
+
+/* Sobre */
+.about { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(32px, 6vw, 80px); align-items: start; }
+.about-text { display: grid; gap: 18px; color: var(--mist); max-width: 60ch; margin-top: 22px; font-size: 1.05rem; }
+.about-text strong { color: var(--ink); font-weight: 600; }
+.pillars { display: grid; gap: 14px; }
+.pillar { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 16px; align-items: center; padding: 18px 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--bg); transition: transform .4s cubic-bezier(.2,.8,.2,1), border-color .3s, box-shadow .4s; }
+.pillar:hover { transform: scale(1.04) translateX(-6px); border-color: var(--ivy); box-shadow: 0 18px 40px -24px var(--ivy); }
+.pillar .ic { width: 52px; height: 52px; border-radius: 50%; background: var(--surface); display: grid; place-items: center; transition: transform .6s cubic-bezier(.3,1.6,.5,1); }
+.pillar:hover .ic { transform: rotate(-25deg) scale(1.15); }
+.pillar .ic svg { width: 28px; height: 28px; }
+.pillar h3 { font-size: 1.05rem; font-weight: 700; }
+.pillar p { color: var(--mist); font-size: .92rem; }
+@media (max-width: 760px) { .about { grid-template-columns: 1fr; } }
+
+/* Cultos */
+.band { background: var(--surface); }
+.sec-head { display: grid; gap: 12px; margin-bottom: 44px; }
+.services { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; perspective: 1000px; }
+.service { position: relative; overflow: hidden; border-radius: 22px; padding: clamp(26px, 4vw, 40px); background: var(--bg); border: 1px solid var(--line); display: grid; gap: 12px; align-content: start; transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transform-style: preserve-3d; transition: transform .25s ease-out, box-shadow .4s; }
+.service:hover { box-shadow: 0 30px 60px -30px var(--ivy); }
+.service .bgleaf { position: absolute; right: -40px; bottom: -50px; width: 220px; height: 220px; opacity: .1; transition: transform 1s cubic-bezier(.2,.8,.2,1), opacity .5s; }
+.service:hover .bgleaf { transform: scale(1.6) rotate(-30deg); opacity: .18; }
+.service .day { font-size: .74rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--ivy); }
+.service .time { font-size: clamp(4rem, 10vw, 6.5rem); font-weight: 200; line-height: .9; letter-spacing: -.02em; font-variant-numeric: tabular-nums; transform: translateZ(40px); }
+.service .time small { font-size: .4em; font-weight: 600; letter-spacing: 0; }
+.service h3 { font-size: clamp(1.3rem, 2.6vw, 1.7rem); font-weight: 800; transform: translateZ(30px); }
+.service p { color: var(--mist); }
+.badge { justify-self: start; font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--on-ivy); background: var(--ivy); padding: 6px 12px; border-radius: 999px; animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 50% { transform: scale(1.07); } }
+@media (max-width: 760px) { .services { grid-template-columns: 1fr; } }
+
+/* Zoom da folha */
+.zoom { height: 260vh; position: relative; padding: 0; }
+.zoom-stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: clip; display: grid; place-items: center; background: var(--bg); }
+.zoom-leaf { width: min(42vw, 260px); height: auto; will-change: transform; }
+.zoom-leaf .vein { transition: opacity .2s; }
+.zoom-text { position: absolute; inset: auto 0 12%; text-align: center; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); font-size: clamp(1.6rem, 5vw, 3.6rem); font-weight: 800; line-height: 1.1; transition: color .4s; }
+.zoom-text .thin { font-weight: 200; }
+.zoom.over .zoom-text { color: var(--on-ivy); }
+.zoom-hint { position: absolute; top: 14%; left: 0; right: 0; text-align: center; font-size: .72rem; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--mist); transition: opacity .3s; }
+.zoom.over .zoom-hint { opacity: 0; }
+
+/* Versículo */
+.verse-band { background: var(--ivy-deep); color: var(--on-ivy); padding-block: clamp(72px, 10vw, 140px); }
+.verse-band blockquote { margin: 0 auto; max-width: 30ch; text-align: center; font-family: var(--f-verse); font-style: italic; font-size: clamp(1.5rem, 3.8vw, 2.6rem); line-height: 1.4; }
+.w { color: color-mix(in srgb, var(--on-ivy) 50%, transparent); transition: color .35s; }
+.w.lit { color: var(--on-ivy); }
+.verse-band cite { display: block; margin-top: 26px; text-align: center; font-family: var(--f-display); font-style: normal; font-weight: 600; font-size: .8rem; letter-spacing: .24em; text-transform: uppercase; opacity: .85; }
+
+/* Visite-nos */
+.visit { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
+.addr { font-size: clamp(1.6rem, 3.6vw, 2.4rem); font-weight: 800; line-height: 1.15; margin-top: 22px; }
+.addr span { display: block; font-weight: 200; color: var(--mist); }
+.city { margin-top: 8px; color: var(--mist); }
+.visit-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.ig { display: inline-flex; align-items: center; gap: 14px; margin-top: 30px; padding: 14px 20px 14px 14px; border-radius: 18px; border: 1px solid var(--line); text-decoration: none; transition: transform .4s cubic-bezier(.2,.8,.2,1), border-color .3s; }
+.ig:hover { transform: scale(1.05) rotate(-1deg); border-color: var(--ivy); }
+.ig .ig-ic { width: 46px; height: 46px; border-radius: 14px; background: var(--ivy); display: grid; place-items: center; color: var(--on-ivy); transition: transform .6s cubic-bezier(.3,1.6,.5,1); }
+.ig:hover .ig-ic { transform: rotate(-12deg) scale(1.1); }
+.ig .ig-ic svg { width: 24px; height: 24px; }
+.ig small { display: block; font-size: .7rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--mist); }
+.ig b { font-size: 1.05rem; }
+.map { position: relative; border-radius: 24px; overflow: hidden; background: var(--surface); border: 1px solid var(--line); aspect-ratio: 4 / 3.4; max-width: 100%; }
+.map svg { width: 100%; height: 100%; display: block; transition: transform 1.2s cubic-bezier(.2,.8,.2,1); }
+.map:hover svg { transform: scale(1.12); }
+.pin { transform-box: fill-box; transform-origin: 50% 100%; animation: bounce 2.2s cubic-bezier(.3,1.6,.5,1) infinite; }
+@keyframes bounce { 0%, 60%, 100% { transform: none; } 30% { transform: translateY(-14px); } }
+.ring { transform-box: fill-box; transform-origin: center; animation: ring 2.2s ease-out infinite; }
+@keyframes ring { from { transform: scale(.4); opacity: .7; } to { transform: scale(2.4); opacity: 0; } }
+@media (max-width: 760px) { .visit { grid-template-columns: 1fr; } }
+
+footer { border-top: 1px solid var(--line); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; padding-block: 28px; font-size: .84rem; color: var(--mist); }
+footer b { color: var(--ink); }
+.toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--bg); font-size: .85rem; font-weight: 600; padding: 10px 18px; border-radius: 999px; z-index: 20; animation: toast .35s cubic-bezier(.3,1.6,.5,1); }
+@keyframes toast { from { transform: translate(-50%, 20px) scale(.8); } }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .js .rv { transform: none; }
+  .zoom { height: auto; }
+  .zoom-stage { position: relative; height: auto; padding-block: 80px 160px; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="leaf" viewBox="0 0 100 100">
+      <path d="M50 4 Q55 18 63 29 Q80 27 96 34 Q86 45 74 54 Q82 67 86 83 Q68 76 55 70 L50 76 L45 70 Q32 76 14 83 Q18 67 26 54 Q14 45 4 34 Q20 27 37 29 Q45 18 50 4 Z" fill="var(--ivy)" stroke="var(--ivy)" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M50 74 L50 14 M50 62 L86 38 M50 62 L14 38 M50 68 L78 78 M50 68 L22 78" stroke="var(--ivy-vein)" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio" aria-label="Ministério Videira, início">
+      <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#leaf"/></svg>
+      <span class="brand-name"><b>MINISTÉRIO</b><span>VIDEIRA</span></span>
+    </a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#sobre">Sobre</a>
+      <a href="#cultos">Cultos</a>
+      <a class="nav-cta" href="#visite">Visite-nos</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="inicio">
+    <canvas id="fall" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="leaves-scroll">
+        <svg class="leaves" viewBox="0 0 320 300" aria-hidden="true">
+          <path class="tendril" d="M120 70 C170 20 230 30 240 80 C248 120 215 140 196 122 C182 108 200 92 214 104 M200 175 C260 140 300 170 290 205 C282 232 250 230 248 212" fill="none" stroke="var(--tendril)" stroke-width="2.4" stroke-linecap="round"/>
+          <g class="leaf"><use href="#leaf" x="10" y="10" width="140" height="140" transform="rotate(-18 80 80)"/></g>
+          <g class="leaf l2"><use href="#leaf" x="60" y="120" width="170" height="170" transform="rotate(8 145 205)"/></g>
+        </svg>
+      </div>
+      <div class="hero-copy">
+        <p class="eyebrow">Igreja cristã · Vila Prudente</p>
+        <h1 class="title" aria-label="Ministério Videira" style="margin-top:14px">
+          <span class="line t1" aria-hidden="true" data-split>MINISTÉRIO</span>
+          <span class="line t2" aria-hidden="true" data-split>VIDEIRA</span>
+        </h1>
+        <span class="ref">Jo 15:4</span>
+        <p class="hero-verse">“Permanecei em mim, e eu permanecerei em vós.”</p>
+        <div class="next" id="next" aria-live="off">
+          <span class="dot" aria-hidden="true"></span>
+          <span>Próximo culto: <b id="next-name">Culto da Família</b></span>
+          <span class="cd" id="next-cd">domingo, 10h</span>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-solid" href="#cultos">Horários dos cultos</a>
+          <a class="btn btn-ghost" href="#visite">Como chegar</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="track" id="track">
+      <span>Permanecei em mim <svg viewBox="0 0 100 100"><use href="#leaf"/></svg> Culto da Família <i>Domingo 10h</i> <svg viewBox="0 0 100 100"><use href="#leaf"/></svg> Culto de Libertação <i>Quarta 20h</i> <svg viewBox="0 0 100 100"><use href="#leaf"/></svg> Vila Prudente <svg viewBox="0 0 100 100"><use href="#leaf"/></svg></span>
+    </div>
+  </div>
+
+  <section id="sobre">
+    <div class="wrap about">
+      <div class="rv">
+        <p class="eyebrow">Quem somos</p>
+        <h2 class="h2" style="margin-top:12px">Ramos ligados <span class="thin">à Videira</span></h2>
+        <div class="about-text">
+          <p>O <strong>Ministério Videira</strong> nasceu de uma convicção simples: assim como o ramo só dá fruto quando está ligado à videira, nós só florescemos quando permanecemos em Cristo.</p>
+          <p>Somos uma família de fé na Vila Prudente. Nos reunimos para adorar a Deus, ouvir a Palavra e cuidar uns dos outros. Aqui há lugar para você e para a sua família.</p>
+        </div>
+      </div>
+      <div class="pillars">
+        <div class="pillar rv" style="--d:1"><span class="ic"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#leaf"/></svg></span><div><h3>Permanecer</h3><p>Uma vida de oração e intimidade com Deus, todos os dias.</p></div></div>
+        <div class="pillar rv" style="--d:2"><span class="ic"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#leaf"/></svg></span><div><h3>Crescer</h3><p>Raízes firmes na Palavra de Deus.</p></div></div>
+        <div class="pillar rv" style="--d:3"><span class="ic"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#leaf"/></svg></span><div><h3>Frutificar</h3><p>Servir com amor e anunciar o Evangelho.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="cultos">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="eyebrow">Cultos</p>
+        <h2 class="h2">Venha cultuar <span class="thin">conosco</span></h2>
+      </div>
+      <div class="services">
+        <article class="service rv tilt" data-svc="0" style="--d:1">
+          <svg class="bgleaf" viewBox="0 0 100 100" aria-hidden="true"><use href="#leaf"/></svg>
+          <span class="day">Domingo</span>
+          <span class="time">10<small>h</small></span>
+          <h3>Culto da Família</h3>
+          <p>Louvor, Palavra e comunhão para toda a família. Traga quem você ama.</p>
+          <span class="badge" hidden>Próximo culto</span>
+        </article>
+        <article class="service rv tilt" data-svc="1" style="--d:2">
+          <svg class="bgleaf" viewBox="0 0 100 100" aria-hidden="true"><use href="#leaf"/></svg>
+          <span class="day">Quarta-feira</span>
+          <span class="time">20<small>h</small></span>
+          <h3>Culto de Libertação</h3>
+          <p>Uma noite de oração, quebrantamento e restauração pelo poder de Deus.</p>
+          <span class="badge" hidden>Próximo culto</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="zoom" id="zoom" aria-label="Eu sou a videira, vós, os ramos">
+    <div class="zoom-stage">
+      <p class="zoom-hint">Role para baixo</p>
+      <svg class="zoom-leaf" id="zoom-leaf" viewBox="0 0 100 100" aria-hidden="true">
+        <path d="M50 4 Q55 18 63 29 Q80 27 96 34 Q86 45 74 54 Q82 67 86 83 Q68 76 55 70 L50 76 L45 70 Q32 76 14 83 Q18 67 26 54 Q14 45 4 34 Q20 27 37 29 Q45 18 50 4 Z" fill="var(--ivy-deep)" stroke="var(--ivy-deep)" stroke-width="2" stroke-linejoin="round"/>
+        <path class="vein" id="zoom-vein" d="M50 74 L50 14 M50 62 L86 38 M50 62 L14 38 M50 68 L78 78 M50 68 L22 78" stroke="var(--ivy-vein)" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+      </svg>
+      <p class="zoom-text">Eu sou a videira, <span class="thin">vós, os ramos.</span></p>
+    </div>
+  </section>
+
+  <section class="verse-band" aria-label="Versículo">
+    <div class="wrap">
+      <blockquote id="verse">Permanecei em mim, e eu permanecerei em vós. Como não pode o ramo produzir fruto de si mesmo, se não permanecer na videira, assim nem vós o podeis dar, se não permanecerdes em mim.</blockquote>
+      <cite>João 15:4</cite>
+    </div>
+  </section>
+
+  <section id="visite">
+    <div class="wrap visit">
+      <div class="rv">
+        <p class="eyebrow">Visite-nos</p>
+        <h2 class="h2" style="margin-top:12px">Você é <span class="thin">bem-vindo</span></h2>
+        <p class="addr" id="addr">R. Ituverava, 51 <span>Vila Prudente</span></p>
+        <p class="city">São Paulo · SP</p>
+        <div class="visit-actions">
+          <a class="btn btn-solid" href="https://www.google.com/maps/search/?api=1&query=R.%20Ituverava%2C%2051%20-%20Vila%20Prudente%2C%20S%C3%A3o%20Paulo%20-%20SP" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            Abrir no mapa
+          </a>
+          <button class="btn btn-ghost" type="button" id="copy-addr">Copiar endereço</button>
+        </div>
+        <a class="ig" href="https://www.instagram.com/ministeriovideiravp/" target="_blank" rel="noopener">
+          <span class="ig-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/></svg></span>
+          <span><small>Siga no Instagram</small><b>@ministeriovideiravp</b></span>
+        </a>
+      </div>
+      <div class="map rv" style="--d:2" role="img" aria-label="Mapa ilustrativo: R. Ituverava, 51, Vila Prudente">
+        <svg viewBox="0 0 400 340" preserveAspectRatio="xMidYMid slice">
+          <g stroke="var(--line)" stroke-width="14" stroke-linecap="round" fill="none">
+            <path d="M-20 70 L420 40"/><path d="M-20 250 L420 290"/><path d="M60 -20 L90 360"/><path d="M330 -20 L300 360"/><path d="M-20 160 L140 175"/>
+          </g>
+          <g stroke="var(--line)" stroke-width="6" stroke-linecap="round" fill="none" opacity=".8">
+            <path d="M160 -20 L175 360"/><path d="M240 -20 L232 360"/><path d="M-20 120 L420 110"/><path d="M-20 205 L420 215"/>
+          </g>
+          <path d="M-20 168 C120 150 260 170 420 155" stroke="var(--tendril)" stroke-width="16" stroke-linecap="round" fill="none"/>
+          <text x="40" y="150" font-family="Montserrat, sans-serif" font-size="12" font-weight="700" letter-spacing="2" fill="var(--mist)">R. ITUVERAVA</text>
+          <g transform="translate(262 162)">
+            <circle class="ring" r="16" fill="var(--ivy)"/>
+            <ellipse rx="10" ry="4" fill="var(--ink)" opacity=".15"/>
+            <g class="pin"><path d="M0 0 C-4 -12 -18 -22 -18 -38 A18 18 0 1 1 18 -38 C18 -22 4 -12 0 0 Z" fill="var(--ivy)"/><use href="#leaf" x="-11" y="-49" width="22" height="22" style="--ivy:var(--on-ivy);--ivy-vein:var(--ivy)"/></g>
+          </g>
+          <text x="200" y="300" text-anchor="middle" font-family="Montserrat, sans-serif" font-size="13" font-weight="700" fill="var(--ink)">Nº 51 · Vila Prudente</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span><b>Ministério Videira</b> · R. Ituverava, 51 · Vila Prudente, São Paulo</span>
+    <span>“Eu sou a videira, vós, os ramos.” Jo 15:5</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" hidden>Copiado</div>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const root = document.documentElement;
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  root.classList.add('js');
+
+  // Letras do título entram uma a uma
+  document.querySelectorAll('[data-split]').forEach(el => {
+    el.innerHTML = [...el.textContent].map((c, i) => `<span class="ch" style="--i:${i}">${c}</span>`).join('');
+  });
+
+  // Faixa corrida: duplica para loop contínuo
+  const track = document.getElementById('track');
+  track.innerHTML += track.innerHTML;
+
+  // Versículo palavra por palavra
+  const verse = document.getElementById('verse');
+  verse.innerHTML = '“' + verse.textContent.split(' ').map(w => `<span class="w">${w}</span>`).join(' ') + '”';
+  const words = [...verse.querySelectorAll('.w')];
+
+  // Revelação com zoom
+  const rvs = document.querySelectorAll('.rv');
+  if (reduce || !('IntersectionObserver' in window)) rvs.forEach(e => e.classList.add('in'));
+  else {
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .15 });
+    rvs.forEach(e => io.observe(e));
+  }
+
+  // Efeitos de rolagem
+  const top = document.getElementById('top');
+  const bar = document.getElementById('progress');
+  const hero = document.getElementById('inicio');
+  const zoom = document.getElementById('zoom');
+  const zleaf = document.getElementById('zoom-leaf');
+  const zvein = document.getElementById('zoom-vein');
+  let ticking = false;
+  function onScroll() {
+    ticking = false;
+    const y = scrollY, vh = innerHeight;
+    top.classList.toggle('small', y > 30);
+    bar.style.transform = `scaleX(${clamp(y / (document.documentElement.scrollHeight - vh), 0, 1)})`;
+    if (reduce) { words.forEach(w => w.classList.add('lit')); return; }
+    root.style.setProperty('--hp', clamp(y / hero.offsetHeight, 0, 1).toFixed(3));
+    const zr = zoom.getBoundingClientRect();
+    const zp = clamp(-zr.top / (zr.height - vh), 0, 1);
+    zleaf.style.transform = `scale(${1 + Math.pow(zp, 2.4) * 42}) rotate(${zp * -28}deg)`;
+    zvein.style.opacity = clamp(1 - zp * 2.5, 0, 1);
+    zoom.classList.toggle('over', zp > .55);
+    const vr = verse.getBoundingClientRect();
+    const vp = clamp((vh * .9 - vr.top) / (vr.height + vh * .35), 0, 1);
+    words.forEach((w, i) => w.classList.toggle('lit', i < vp * words.length));
+  }
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  addEventListener('resize', onScroll);
+  onScroll();
+
+  if (!reduce) {
+    // Folhas acompanham o mouse
+    hero.addEventListener('pointermove', e => {
+      const r = hero.getBoundingClientRect();
+      root.style.setProperty('--mx', ((e.clientX - r.left) / r.width - .5).toFixed(3));
+      root.style.setProperty('--my', ((e.clientY - r.top) / r.height - .5).toFixed(3));
+    });
+    // Cartões em 3D
+    document.querySelectorAll('.tilt').forEach(c => {
+      c.addEventListener('pointermove', e => {
+        const r = c.getBoundingClientRect();
+        c.style.setProperty('--ry', ((e.clientX - r.left) / r.width - .5) * 10 + 'deg');
+        c.style.setProperty('--rx', ((e.clientY - r.top) / r.height - .5) * -10 + 'deg');
+      });
+      c.addEventListener('pointerleave', () => { c.style.setProperty('--rx', '0deg'); c.style.setProperty('--ry', '0deg'); });
+    });
+  }
+
+  // Folhas caindo no topo
+  const cv = document.getElementById('fall');
+  const ctx = cv.getContext('2d');
+  const shape = new Path2D('M50 4 Q55 18 63 29 Q80 27 96 34 Q86 45 74 54 Q82 67 86 83 Q68 76 55 70 L50 76 L45 70 Q32 76 14 83 Q18 67 26 54 Q14 45 4 34 Q20 27 37 29 Q45 18 50 4 Z');
+  let W = 0, H = 0, leaves = [], running = true, color = '#1f4a33';
+  function size() {
+    const dpr = Math.min(2, devicePixelRatio || 1);
+    W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    color = getComputedStyle(root).getPropertyValue('--ivy').trim() || color;
+  }
+  function make(initial) {
+    return { x: Math.random() * W, y: initial ? Math.random() * H : -40, s: 10 + Math.random() * 22, r: Math.random() * 6.28, vr: (Math.random() - .5) * .02, vy: .25 + Math.random() * .5, ph: Math.random() * 6.28, a: .08 + Math.random() * .14 };
+  }
+  function draw(t) {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = color;
+    for (const l of leaves) {
+      if (!reduce) { l.y += l.vy; l.r += l.vr; l.x += Math.sin(t / 1400 + l.ph) * .35; if (l.y > H + 40) Object.assign(l, make(false)); }
+      ctx.save(); ctx.globalAlpha = l.a; ctx.translate(l.x, l.y); ctx.rotate(l.r); ctx.scale(l.s / 100, l.s / 100); ctx.translate(-50, -50); ctx.fill(shape); ctx.restore();
+    }
+    if (running && !reduce) requestAnimationFrame(draw);
+  }
+  size();
+  leaves = Array.from({ length: W < 600 ? 10 : 18 }, () => make(true));
+  addEventListener('resize', size);
+  matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', size);
+  new MutationObserver(size).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+  if ('IntersectionObserver' in window && !reduce) {
+    new IntersectionObserver(([e]) => { const was = running; running = e.isIntersecting; if (running && !was) requestAnimationFrame(draw); }).observe(hero);
+  }
+  requestAnimationFrame(draw);
+
+  // Contagem para o próximo culto (horário de São Paulo, UTC−3)
+  const SP = -3 * 3600e3;
+  const services = [
+    { dow: 0, h: 10, name: 'Culto da Família', label: 'domingo, 10h' },
+    { dow: 3, h: 20, name: 'Culto de Libertação', label: 'quarta, 20h' }
+  ];
+  function nextService(now) {
+    const sp = new Date(now + SP);
+    let best = null;
+    for (let k = -1; k < 8; k++) for (let i = 0; i < services.length; i++) {
+      const s = services[i];
+      const t = Date.UTC(sp.getUTCFullYear(), sp.getUTCMonth(), sp.getUTCDate() + k, s.h) - SP;
+      if (new Date(t + SP).getUTCDay() !== s.dow) continue;
+      if (t + 2 * 3600e3 > now && (!best || t < best.t)) best = { ...s, i, t };
+    }
+    return best;
+  }
+  const nName = document.getElementById('next-name');
+  const nCd = document.getElementById('next-cd');
+  const badges = document.querySelectorAll('.service .badge');
+  function tick() {
+    const now = Date.now(), n = nextService(now);
+    if (!n) return;
+    nName.textContent = n.name;
+    const diff = n.t - now;
+    if (diff <= 0) nCd.textContent = 'acontecendo agora';
+    else {
+      const d = Math.floor(diff / 864e5), h = Math.floor(diff / 36e5) % 24, m = Math.floor(diff / 6e4) % 60, s = Math.floor(diff / 1e3) % 60;
+      const p = v => String(v).padStart(2, '0');
+      nCd.textContent = `${n.label} · em ${d ? d + 'd ' : ''}${p(h)}h ${p(m)}m ${p(s)}s`;
+    }
+    badges.forEach((b, i) => b.hidden = i !== n.i);
+  }
+  tick(); setInterval(tick, 1000);
+
+  // Copiar endereço
+  const toast = document.getElementById('toast');
+  let tt;
+  function show(msg) { toast.textContent = msg; toast.hidden = true; void toast.offsetWidth; toast.hidden = false; clearTimeout(tt); tt = setTimeout(() => toast.hidden = true, 2000); }
+  document.getElementById('copy-addr').addEventListener('click', () => {
+    const text = 'R. Ituverava, 51 - Vila Prudente, São Paulo - SP';
+    const el = document.getElementById('addr');
+    const select = () => { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); show('Endereço selecionado. Use Ctrl+C para copiar'); };
+    try { navigator.clipboard.writeText(text).then(() => show('Endereço copiado'), select); } catch (e) { select(); }
+  });
+})();
+</script>
+</body>
+</html>
